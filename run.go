@@ -1,3 +1,11 @@
+/*
+ * @,@Author: ,: your name
+ * @,@Date: ,: 2020-10-06 18:37:45
+ * @,@LastEditTime: ,: 2020-11-23 20:16:56
+ * @,@LastEditors: ,: Please set LastEditors
+ * @,@Description: ,: In User Settings Edit
+ * @,@FilePath: ,: \mySunRun\run.go
+ */
 package main
 
 import (
@@ -16,11 +24,16 @@ func justRun(imeiCode string, distance string) bool {
 	ios := "http://client4.aipao.me/api"
 	iosb := false
 	log.Println("run " + imeiCode + " " + distance)
+	appVersion := "2.40"
 	randomGenerateTable()
-	resInfo, _ := http.Get(apiRoot + "/%7Btoken%7D/QM_Users" +
-		"/Login_AndroidSchool?IMEICode=" + imeiCode)
+	req, _ := http.NewRequest("GET", apiRoot + "/%7Btoken%7D/QM_Users" +
+	"/Login_AndroidSchool?IMEICode=" + imeiCode, nil)
+	req.Header.Add("version", appVersion)
+	req.Header.Add("Host", "client4.aipao.me")
+	req.Header.Add("Connection", "Keep-Alive")
+	resInfo, _ := (&http.Client{}).Do(req)
 	dataInfo, _ := ioutil.ReadAll(resInfo.Body)
-	// log.Println(string(dataInfo))
+	// log.Println(string(dataInfo)))
 	resInfo.Body.Close()
 	returnData := &returnInfo{}
 	_ = json.Unmarshal(dataInfo, returnData)
