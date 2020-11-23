@@ -6,7 +6,7 @@ def run(data):
     result = os.system(s)
     print(data[0])
 
-a = open("/home/faliks/Desktop/SunRun-master/account.txt", 'r')
+a = open("./account.txt", 'r')
 for lines in a.readlines():
     data = lines.split(' ')
     run(data)
